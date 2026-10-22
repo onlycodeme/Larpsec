@@ -250,7 +250,7 @@ local state = {
     Bounds = {},
     Hover = "",
     LastToggle = -10,
-    Version = "2.8",
+    Version = "2.9",
     DrawingRegistry = {},
     ProfileLoaded = false,
     IconCount = 0
@@ -843,7 +843,7 @@ local function filtered()
     local out = {}
     local query = state.Query:lower()
     for _, item in ipairs(state.Catalog) do
-        local matches = (state.Filter == "All" or item.Kind == state.Filter) and type(item.Icon) == "string" and item.Icon:match("^%d+$") ~= nil
+        local matches = state.Filter == "All" or item.Kind == state.Filter
         matches = matches and (not item.RequiresUnsafe or (state.ExtendedSkins and state.UnsafeReady and item.Alias ~= nil))
         if state.Tab == "Favorites" then matches = matches and state.Favorites[item.Key] == true end
         if state.Tab == "Selected" then matches = matches and state.Selected[item.Kind] == item.Id end
