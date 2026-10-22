@@ -1,4 +1,4 @@
-# Larpsec 2.8 para Matcha
+# Larpsec 2.9 para Matcha
 
 Selector cosmético local para Murder Duels. El panel negro aparece al ejecutar; **Right Shift** lo abre y lo oculta. Elige una skin y cambia de arma normalmente para que el juego reconstruya el modelo.
 
@@ -18,7 +18,7 @@ Las futuras actualizaciones se publican reemplazando `Larpsec.lua`; la llamada d
 |---|---|
 | Panel, IDs de hasta 15 caracteres, perfil y Auto Apply | Drawing, UI Binding y archivos de Matcha; sin Hybrid ni Unsafe. |
 | IDs largos | **Allow Unsafe LuaU** en Matcha y **Extended skins = ON** en Larpsec. Si no se valida la disposición de memoria, esas skins no aparecen. |
-| Iconos nativos del hotbar | **Allow Unsafe LuaU** y `Native hotbar icons = ON`. Es una escritura local validada al campo de imagen de `WeaponIcon`; no usa Hybrid ni envía remotos. Solo se muestran skins con ID de imagen Roblox validado. |
+| Iconos nativos del hotbar | **Allow Unsafe LuaU** y `Native hotbar icons = ON`. Es una escritura local validada al campo de imagen de `WeaponIcon`; no usa Hybrid ni envía remotos. Solo se muestran iconos del hotbar cuando hay un ID de imagen Roblox validado. |
 
 Larpsec no llama FireServer ni InvokeServer. Hybrid no es necesario para las funciones implementadas; durante las pruebas ya estaba activado y no se cambió esa preferencia.
 
@@ -39,9 +39,9 @@ El perfil conserva las dos skins, favoritos, Auto Apply y preferencias. Auto App
 ## Comprobado y pendiente
 
 - Guardado, recarga con Auto Apply activado y apagado, recarga de un ID largo y limpieza de los dibujos registrados: comprobados.
-- **Versión local 2.8:** compiló con `loadstring` de Matcha y se ejecutó en Practice sin iniciar duelo. La GUI abrió, el perfil cargó, los iconos del hotbar coincidieron con Seraphim y Murder Note, no aparecieron duplicados flotantes y Right Shift abrió el panel con una pulsación sostenida corta.
+- **Versión local 2.9:** compiló con `loadstring` de Matcha y se ejecutó en Practice sin iniciar duelo. La GUI abrió, el perfil cargó, los iconos del hotbar coincidieron con Seraphim y Murder Note, no aparecieron duplicados flotantes y Right Shift abrió el panel con una pulsación sostenida corta.
 - Omega Energy Blade, Green Energy Blade y Omega Energy Blaster: reconstrucción nativa comprobada; sus cantidades de MeshPart coinciden con las plantillas. Blue Energy Blaster fue rechazada correctamente por conflicto con otro jugador. Las demás skins largas no están certificadas individualmente.
-- **Iconos del hotbar:** Larpsec escribe el URI Roblox directamente al campo de cadena que usa cada `WeaponIcon`, con validación de dirección, capacidad, lectura posterior y rollback. El catálogo tiene 207 modelos: 158 poseen IDs nativos y las 49 entradas sin ID se ocultan. La escritura es local y no cambia el inventario del servidor. La versión 2.8 vuelve a aplicar el icono antes de cada render y vuelve a buscar las ranuras cada 50 ms durante la ronda y cada 100 ms en el lobby. La prueba visual en Practice confirmó los dos iconos seleccionados y que no salen duplicados flotantes. Quité por completo el overlay externo. Matcha no expone un evento de cambio ni prioridad de render para interceptar todas las reconstrucciones antes del juego, así que no puedo prometer cero destellos; tampoco he vuelto a probar el cambio de ventajas.
+- **Iconos del hotbar:** Larpsec escribe el URI Roblox directamente al campo de cadena que usa cada `WeaponIcon`, con validación de dirección, capacidad, lectura posterior y rollback. El catálogo tiene 207 modelos: 158 poseen IDs nativos y las 49 entradas sin icono permanecen visibles y seleccionables, con el marcador NO ICON. La escritura es local y no cambia el inventario del servidor. La versión 2.9 vuelve a aplicar el icono antes de cada render y vuelve a buscar las ranuras cada 50 ms durante la ronda y cada 100 ms en el lobby. La prueba visual en Practice confirmó los dos iconos seleccionados y que no salen duplicados flotantes. Quité por completo el overlay externo. Matcha no expone un evento de cambio ni prioridad de render para interceptar todas las reconstrucciones antes del juego, así que no puedo prometer cero destellos; tampoco he vuelto a probar el cambio de ventajas.
 - **Repeticiones:** el controlador del juego recibe `ReplayData` y reconstruye cada actor desde los datos de participantes, incluidos los IDs de arma. Larpsec solo cambia atributos locales y no envía ni modifica ese paquete, así que su skin local no se replica a otros espectadores. La invisibilidad que persistió tras descargar Larpsec no demuestra que todos la vean; para confirmar si es un fallo compartido hace falta comparar la misma repetición desde otro cliente. La versión 2.7 pausa los cambios al detectar antes el marcador `LobbySpectateMatchId` y reanuda al salir. Esto mejora la transición, pero no afirma corregir la visibilidad del arma dentro de la repetición.
 - Los paquetes de sonido y animación se conservan y se resuelven mediante el nombre corto cuando están disponibles. No se ha probado cada disparo, estela, animación o sonido de cada skin. No se promete equivalencia completa.
 
